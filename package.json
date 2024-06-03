@@ -17,17 +17,12 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "mongoose": "^8.3.1",
-    "morgan": "^1.10.0"
+    "mongoose": "^8.3.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.3.0",
-    "eslint": "^9.3.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jsx-a11y": "^6.8.0",
-    "eslint-plugin-react": "^7.34.2",
-    "eslint-plugin-react-hooks": "^4.6.2",
-    "globals": "^15.3.0",
-    "nodemon": "^3.1.0"
+    "@flydotio/dockerfile": "^0.5.0",
+    "@stylistic/eslint-plugin-js": "^1.6.1",
+    "eslint": "^8.56.0",
+    "nodemon": "^3.0.3"
   }
 }
