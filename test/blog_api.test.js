@@ -48,6 +48,27 @@ test.only("unique identifier property of blog posts is named id", async () => {
   });
 });
 
+test.only("a valid blog can be added", async () => {
+  const newBlog = {
+    title: "New Blog Post",
+    author: "New Author",
+    url: "http://example3.com",
+    likes: 3,
+  };
+
+  await api
+    .post("/api/blogs")
+    .send(newBlog)
+    .expect(201)
+    .expect("Content-Type", /application\/json/);
+
+  const blogsAtEnd = await Blog.find({});
+  assert.strictEqual(blogsAtEnd.length, 3);
+
+  const titles = blogsAtEnd.map((r) => r.title);
+  assert.ok(titles.includes("New Blog Post"));
+});
+
 after(async () => {
   await mongoose.connection.close();
 });
