@@ -29,7 +29,7 @@ beforeEach(async () => {
   await Blog.insertMany(initialBlogs);
 });
 
-test.only("blogs are returned as json", async () => {
+test("blogs are returned as json", async () => {
   await api
     .get("/api/blogs")
     .expect(200)
@@ -39,7 +39,7 @@ test.only("blogs are returned as json", async () => {
   assert.strictEqual(response.body.length, 2);
 });
 
-test.only("unique identifier property of blog posts is named id", async () => {
+test("unique identifier property of blog posts is named id", async () => {
   const response = await api.get("/api/blogs");
   const blogs = response.body;
   blogs.forEach((blog) => {
@@ -48,7 +48,7 @@ test.only("unique identifier property of blog posts is named id", async () => {
   });
 });
 
-test.only("a valid blog can be added", async () => {
+test("a valid blog can be added", async () => {
   const newBlog = {
     title: "New Blog Post",
     author: "New Author",
@@ -69,7 +69,7 @@ test.only("a valid blog can be added", async () => {
   assert.ok(titles.includes("New Blog Post"));
 });
 
-test.only("if likes property is missing, it defaults to 0", async () => {
+test("if likes property is missing, it defaults to 0", async () => {
   const newBlog = {
     title: "Blog without likes",
     author: "Author",
@@ -86,7 +86,7 @@ test.only("if likes property is missing, it defaults to 0", async () => {
   assert.strictEqual(savedBlog.likes, 0);
 });
 
-test.only("blog without title and url is not added", async () => {
+test("blog without title and url is not added", async () => {
   const newBlog = {
     author: "Author without title and url",
     likes: 1,
@@ -98,7 +98,7 @@ test.only("blog without title and url is not added", async () => {
   assert.strictEqual(blogsAtEnd.length, 2);
 });
 
-test.only("a blog can be deleted", async () => {
+test("a blog can be deleted", async () => {
   const blogsAtStart = await Blog.find({});
   const blogToDelete = blogsAtStart[0];
 
@@ -109,6 +109,35 @@ test.only("a blog can be deleted", async () => {
 
   const titles = blogsAtEnd.map((r) => r.title);
   assert.ok(!titles.includes(blogToDelete.title));
+});
+
+test.only("a blog can be updated", async () => {
+  const blogsAtStart = await Blog.find({});
+  const blogToUpdate = blogsAtStart[0];
+
+  const updatedBlog = { ...blogToUpdate.toJSON(), likes: 10 };
+
+  await api
+    .put(`/api/blogs/${blogToUpdate.id}`)
+    .send(updatedBlog)
+    .expect(200)
+    .expect("Content-Type", /application\/json/);
+
+  const blogsAtEnd = await Blog.find({});
+  const updatedBlogInDb = blogsAtEnd.find((blog) => blog.id === blogToUpdate.id);
+  assert.strictEqual(updatedBlogInDb.likes, 10);
+});
+
+test.only("updating a non-existing blog returns 404", async () => {
+  const nonExistingId = "665dcb194be3f02f9042fe71";
+  const updatedBlog = {
+    title: "New Blog",
+    author: "New Author",
+    url: "http://newblog.com",
+    likes: 5,
+  };
+
+  await api.put(`/api/blogs/${nonExistingId}`).send(updatedBlog).expect(404);
 });
 
 after(async () => {
