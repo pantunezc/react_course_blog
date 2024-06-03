@@ -38,6 +38,22 @@ const listWithMultipleBlogs = [
     likes: 12,
     __v: 0,
   },
+  {
+    _id: "5a422ba71b54a676234d17fb",
+    title: "Blog by Robert C. Martin",
+    author: "Robert C. Martin",
+    url: "https://example.com",
+    likes: 0,
+    __v: 0,
+  },
+  {
+    _id: "5a422ca71b54a676234d17fc",
+    title: "Another Blog by Robert C. Martin",
+    author: "Robert C. Martin",
+    url: "https://example.com",
+    likes: 0,
+    __v: 0,
+  },
 ];
 
 const listWithNoBlogs = [];
@@ -86,6 +102,29 @@ describe("favorite blog", () => {
 
   test("when list has no blogs, equals null", () => {
     const result = listHelper.favoriteBlog([]);
+    assert.strictEqual(result, null);
+  });
+});
+
+describe("most blogs", () => {
+  test("when list has only one blog, equals the author of that blog", () => {
+    const result = listHelper.mostBlogs(listWithOneBlog);
+    assert.deepStrictEqual(result, {
+      author: "Edsger W. Dijkstra",
+      blogs: 1,
+    });
+  });
+
+  test("when list has multiple blogs, equals the author with most blogs", () => {
+    const result = listHelper.mostBlogs(listWithMultipleBlogs);
+    assert.deepStrictEqual(result, {
+      author: "Robert C. Martin",
+      blogs: 2,
+    });
+  });
+
+  test("when list has no blogs, equals null", () => {
+    const result = listHelper.mostBlogs([]);
     assert.strictEqual(result, null);
   });
 });
