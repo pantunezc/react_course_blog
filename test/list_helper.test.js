@@ -43,7 +43,7 @@ const listWithMultipleBlogs = [
     title: "Blog by Robert C. Martin",
     author: "Robert C. Martin",
     url: "https://example.com",
-    likes: 0,
+    likes: 10,
     __v: 0,
   },
   {
@@ -51,7 +51,7 @@ const listWithMultipleBlogs = [
     title: "Another Blog by Robert C. Martin",
     author: "Robert C. Martin",
     url: "https://example.com",
-    likes: 0,
+    likes: 6,
     __v: 0,
   },
 ];
@@ -72,7 +72,7 @@ describe("total likes", () => {
 
   test("when list has multiple blogs, equals the sum of likes", () => {
     const result = listHelper.totalLikes(listWithMultipleBlogs);
-    assert.strictEqual(result, 24); // 5 + 7 + 12 = 24
+    assert.strictEqual(result, 40); // 5 + 7 + 12 + 10 + 6 = 24
   });
 
   test("when list has no blogs, equals zero", () => {
@@ -125,6 +125,29 @@ describe("most blogs", () => {
 
   test("when list has no blogs, equals null", () => {
     const result = listHelper.mostBlogs([]);
+    assert.strictEqual(result, null);
+  });
+});
+
+describe("most likes", () => {
+  test("when list has only one blog, equals the author of that blog", () => {
+    const result = listHelper.mostLikes(listWithOneBlog);
+    assert.deepStrictEqual(result, {
+      author: "Edsger W. Dijkstra",
+      likes: 5,
+    });
+  });
+
+  test("when list has multiple blogs, equals the author with most likes", () => {
+    const result = listHelper.mostLikes(listWithMultipleBlogs);
+    assert.deepStrictEqual(result, {
+      author: "Robert C. Martin",
+      likes: 16,
+    });
+  });
+
+  test("when list has no blogs, equals null", () => {
+    const result = listHelper.mostLikes([]);
     assert.strictEqual(result, null);
   });
 });
