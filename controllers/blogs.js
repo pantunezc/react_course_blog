@@ -13,6 +13,10 @@ blogsRouter.get("/", async (request, response) => {
 blogsRouter.post("/", async (request, response) => {
   const { title, author, url, likes } = request.body;
 
+  if (!title || !url) {
+    return response.status(400).json({ error: "title or url missing" });
+  }
+
   const blog = new Blog({
     title,
     author,
