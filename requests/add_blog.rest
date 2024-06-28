@@ -1,6 +1,6 @@
 POST http://localhost:3003/api/blogs/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ld3VzZXIyIiwiaWQiOiI2NjY3MDk3ODg2MjY5ODBkYjZjNjE3Y2UiLCJpYXQiOjE3MTgwMzEzNzN9.rviDz-pHQmpKmmcVQ3nWR6C_mXYBdE8dv25OkV2NlWs
+Authorization: Bearer token_here
 
 {
     "title": "Titletest2",
