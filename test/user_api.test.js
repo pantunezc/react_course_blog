@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const app = require("../app");
 
 describe("User creation", () => {
-  test.only("creation fails with proper statuscode and message if username is too short", async () => {
+  test("creation fails with proper statuscode and message if username is too short", async () => {
     const newUser = {
       username: "us", // Nombre de usuario demasiado corto
       password: "password123",
