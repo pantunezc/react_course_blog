@@ -29,6 +29,7 @@ blogsRouter.post("/", middleware.userExtractor, async (request, response) => {
   });
 
   try {
+    blog.user = user;
     const savedBlog = await blog.save();
     user.blogs = user.blogs.concat(savedBlog._id);
     await user.save();
